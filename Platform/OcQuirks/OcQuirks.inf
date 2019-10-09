@@ -1,0 +1,24 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OcQuirks
+  FILE_GUID                      = 43C8CFCA-03C0-4AA8-8BEB-5AF6AB3570A2
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = QuirksEntryPoint
+
+[Packages]
+  EfiPkg/EfiPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
+  OcSupportPkg/OcSupportPkg.dec
+
+[LibraryClasses]
+  DebugLib
+  OcAppleBootCompatLib
+  OcBootManagementLib
+  OcMachoLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+
+[Sources]
+  OcQuirks.c
