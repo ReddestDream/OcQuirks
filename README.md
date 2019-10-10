@@ -1,6 +1,5 @@
 
 # OcQuirks
-========
 
 OcQuirks is a drop in replacement EFI driver for Clover that replaces AptioMemoryFix and all OsxAptioFix variants.  It is built against the OpenCore source tree, and supports OpenCore's quirks model.
 
