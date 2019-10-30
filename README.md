@@ -69,5 +69,5 @@ Follow the installation procedures found earlier in the documentation, using the
 ## Credits
 - [Apple](https://www.apple.com) for macOS
 - [vit9696](https://github.com/vit9696) for [OpenCore](https://github.com/acidanthera/OpenCorePkg/blob/master/README.md) and AptioMemoryFix
-- [Download-Fritz](https://github.com/Download-Fritz) and [al3x](https://github.com/al3x) for ideas and code contributions
+- [Download-Fritz](https://github.com/Download-Fritz) and [al3x](https://github.com/al3xtjames) for ideas and code contributions
 - [CorpNewt](https://github.com/corpnewt) for the configuration scripts
