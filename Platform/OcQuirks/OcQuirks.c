@@ -3,7 +3,6 @@
 #include <Library/OcTemplateLib.h>
 #include <Library/OcAppleBootCompatLib.h>
 #include <Library/UefiBootServicesTableLib.h>
-//#include <Library/DebugLib.h>
 
 #include <Protocol/LoadedImage.h>
 #include <Protocol/SimpleFileSystem.h>
@@ -141,8 +140,6 @@ QuirksProvideConfig (
   BOOLEAN Success = ParseSerialized (Config, &mConfigInfo, ConfigData, ConfigDataSize);
   
   gBS->FreePool(ConfigData);
-//  gBS->FreePool(LoadedImage);
-//  gBS->FreePool(FileSystem);
   gBS->FreePool(&ConfigDataSize);
   gBS->FreePool(&Status);
   gBS->FreePool(&Storage);
@@ -164,18 +161,18 @@ QuirksEntryPoint (
   
   OC_ABC_SETTINGS AbcSettings = {
   
-    .AvoidRuntimeDefrag		= Config.AvoidRuntimeDefrag,
-    .SetupVirtualMap		= Config.SetupVirtualMap,
-    .ProvideCustomSlide		= Config.ProvideCustomSlide,
-    .DevirtualiseMmio		= Config.DevirtualiseMmio,
-    .DisableSingleUser		= Config.DisableSingleUser,
-    .DiscardHibernateMap	= Config.DiscardHibernateMap,
-    .EnableSafeModeSlide	= Config.EnableSafeModeSlide,
-    .ProtectCsmRegion		= Config.ProtectCsmRegion,
-    .ShrinkMemoryMap		= Config.ShrinkMemoryMap,
-    .ForceExitBootServices	= Config.ForceExitBootServices,
-    .DisableVariableWrite	= Config.DisableVariableWrite,
-    .EnableWriteUnprotector	= Config.EnableWriteUnprotector
+    .AvoidRuntimeDefrag	    = Config.AvoidRuntimeDefrag,
+    .SetupVirtualMap        = Config.SetupVirtualMap,
+    .ProvideCustomSlide     = Config.ProvideCustomSlide,
+    .DevirtualiseMmio       = Config.DevirtualiseMmio,
+    .DisableSingleUser      = Config.DisableSingleUser,
+    .DiscardHibernateMap    = Config.DiscardHibernateMap,
+    .EnableSafeModeSlide    = Config.EnableSafeModeSlide,
+    .ProtectCsmRegion       = Config.ProtectCsmRegion,
+    .ShrinkMemoryMap        = Config.ShrinkMemoryMap,
+    .ForceExitBootServices  = Config.ForceExitBootServices,
+    .DisableVariableWrite   = Config.DisableVariableWrite,
+    .EnableWriteUnprotector = Config.EnableWriteUnprotector
   };
   
   if (Config.ProvideConsoleGopEnable) {
