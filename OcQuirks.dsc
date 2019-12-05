@@ -54,6 +54,9 @@
   OcRtcLib|OcSupportPkg/Library/OcRtcLib/OcRtcLib.inf
   OcStringLib|OcSupportPkg/Library/OcStringLib/OcStringLib.inf
   OcTimerLib|OcSupportPkg/Library/OcTimerLib/OcTimerLib.inf
+  OcTemplateLib|OcSupportPkg/Library/OcTemplateLib/OcTemplateLib.inf
+  OcSerializeLib|OcSupportPkg/Library/OcSerializeLib/OcSerializeLib.inf
+  OcStorageLib|OcSupportPkg/Library/OcStorageLib/OcStorageLib.inf
   OcXmlLib|OcSupportPkg/Library/OcXmlLib/OcXmlLib.inf
   PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   PciLib|MdePkg/Library/BasePciLibCf8/BasePciLibCf8.inf

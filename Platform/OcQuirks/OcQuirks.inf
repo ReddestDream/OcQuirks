@@ -17,8 +17,15 @@
   OcAppleBootCompatLib
   OcBootManagementLib
   OcMachoLib
+  OcStorageLib
+  OcSerializeLib
+  OcTemplateLib
   UefiBootServicesTableLib
   UefiDriverEntryPoint
+
+[Protocols]
+  gEfiSimpleFileSystemProtocolGuid
+  gEfiLoadedImageProtocolGuid
 
 [Sources]
   OcQuirks.c
