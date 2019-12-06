@@ -22,7 +22,7 @@
   _(BOOLEAN , EnableWriteUnprotector  ,   , TRUE  ,()) \
   _(BOOLEAN , ForceExitBootServices   ,   , TRUE  ,()) \
   _(BOOLEAN , ProtectCsmRegion        ,   , FALSE ,()) \
-  _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE ,()) \
+  _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
   _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,())
