@@ -19,7 +19,8 @@ To install OcQuirks, download the latest release or build it using the instructi
 
 If your system has trouble booting, use your USB stick to boot back into macOS and revert by reversing the process.  Inspect the parameters below and build OcQuirks with parameters that better match your system.
 
-## Default Parameters
+## Configuration
+The parameters listed below can be changed by dropping in OcQuirks.plist into your Clover drivers folder. This can be found in either the release zip or the root of the OcQuirks bathroom. If no plist is found, then the defaults below are used.
 
 |Quirk|Default Value|Description|
 |---|---|---|
@@ -40,20 +41,13 @@ If your system has trouble booting, use your USB stick to boot back into macOS a
 For a more indepth description of quirks, review the [OpenCore Configuration Manual](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf).
 
 ## Building
-Building OcQuirks is simple, you just need macOS and time.  Review the table above to determine if you need to make any modifications to OcQuirks before building, and then follow the process below.
+Building OcQuirks is simple, you just need macOS and time.  You do not need to configure OcQuirks before building now, so all you need to do is follow the process below to build.
 
 ### Clone the Repository
 
 ```
 $ git clone https://github.com/ReddestDream/OcQuirks.git
 $ cd OcQuirks
-```
-
-### Configure OcQuirks
-Run the ConfigureQuirks utility and use the menu system to make any necessary changes to the source.
-
-```
-$ ./ConfigureQuirks.command
 ```
 
 ### Build OcQuirks
