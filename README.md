@@ -20,7 +20,7 @@ To install OcQuirks, download the latest release or build it using the instructi
 If your system has trouble booting, use your USB stick to boot back into macOS and revert by reversing the process.  Inspect the parameters below and build OcQuirks with parameters that better match your system.
 
 ## Configuration
-The parameters listed below can be changed by dropping in OcQuirks.plist into your Clover drivers folder. This can be found in either the release zip or the root of the OcQuirks bathroom. If no plist is found, then the defaults below are used.
+The parameters listed below can be changed by dropping in OcQuirks.plist into your Clover drivers folder. This can be found in either the release zip or the root of the OcQuirks repository. If no plist is found, then the defaults below are used.
 
 |Quirk|Default Value|Description|
 |---|---|---|
