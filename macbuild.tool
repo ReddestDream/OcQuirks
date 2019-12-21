@@ -44,9 +44,10 @@ package() {
     echo "Invalid version $ver"
   fi
 
+  rm -rf "$1"/tmp || exit 1
+  mkdir -p "$1"/tmp/Drivers || exit 1
+  cp OcQuirks.plist "$1"/tmp/Drivers || exit 1
   pushd "$1" || exit 1
-  rm -rf tmp || exit 1
-  mkdir -p tmp/Drivers || exit 1
   cp OcQuirks.efi tmp/Drivers/ || exit 1
   pushd tmp || exit 1
   zip -qry -FS ../"OcQuirks-R${ver}-${2}.zip" * || exit 1
