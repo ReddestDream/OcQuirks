@@ -71,6 +71,7 @@
 
 [Components]
   OcQuirks/Platform/OcQuirks/OcQuirks.inf
+  OcSupportPkg/Platform/FwRuntimeServices/FwRuntimeServices.inf
 
 [PcdsFixedAtBuild]
   gEfiMdePkgTokenSpaceGuid.PcdMaximumAsciiStringLength|0
