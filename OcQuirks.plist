@@ -5,9 +5,9 @@
 	<key>AvoidRuntimeDefrag</key>
 	<true/>
 	<key>SetupVirtualMap</key>
-	<false/>
+	<true/>
 	<key>ProvideCustomSlide</key>
-	<false/>
+	<true/>
 	<key>DevirtualiseMmio</key>
 	<false/>
 	<key>DisableSingleUser</key>
@@ -15,18 +15,18 @@
 	<key>DiscardHibernateMap</key>
 	<false/>
 	<key>EnableSafeModeSlide</key>
-	<false/>
+	<true/>
 	<key>ProtectCsmRegion</key>
 	<false/>
 	<key>ShrinkMemoryMap</key>
 	<false/>
 	<key>ForceExitBootServices</key>
-	<false/>
+	<true/>
 	<key>DisableVariableWrite</key>
 	<false/>
 	<key>EnableWriteUnprotector</key>
-	<false/>
+	<true/>
 	<key>ProvideConsoleGopEnable</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
