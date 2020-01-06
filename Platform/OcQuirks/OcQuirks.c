@@ -25,7 +25,8 @@
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
-  _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,())
+  _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,()) \
+  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,())
   OC_DECLARE (OC_QUIRKS)
 
 OC_STRUCTORS (OC_QUIRKS, ())
@@ -45,7 +46,8 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("ProvideConsoleGopEnable" , OC_QUIRKS, ProvideConsoleGopEnable),
   OC_SCHEMA_BOOLEAN_IN ("ProvideCustomSlide"      , OC_QUIRKS, ProvideCustomSlide),
   OC_SCHEMA_BOOLEAN_IN ("SetupVirtualMap"         , OC_QUIRKS, SetupVirtualMap),
-  OC_SCHEMA_BOOLEAN_IN ("ShrinkMemoryMap"         , OC_QUIRKS, ShrinkMemoryMap)
+  OC_SCHEMA_BOOLEAN_IN ("ShrinkMemoryMap"         , OC_QUIRKS, ShrinkMemoryMap),
+  OC_SCHEMA_BOOLEAN_IN ("SignalAppleOS"           , OC_QUIRKS, SignalAppleOS)
 };
 
 STATIC

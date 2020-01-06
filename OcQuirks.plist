@@ -28,5 +28,7 @@
 	<true/>
 	<key>ProvideConsoleGopEnable</key>
 	<true/>
+	<key>SignalAppleOS</key>
+	<false/>
 </dict>
 </plist>
