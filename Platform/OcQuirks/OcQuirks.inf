@@ -17,6 +17,7 @@
   OcAppleBootCompatLib
   OcBootManagementLib
   OcMachoLib
+  OcOSInfoLib
   OcStorageLib
   OcSerializeLib
   OcTemplateLib
