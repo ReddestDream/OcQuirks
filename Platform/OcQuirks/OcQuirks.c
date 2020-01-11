@@ -12,6 +12,16 @@
 
 #define MAX_DATA_SIZE 10000
 
+#define OC_MMIO_WL_STRUCT_FIELDS(_, __) \
+  _(BOOLEAN   , Enabled , , FALSE , ()) \
+  _(UINT64    , Address , , 0     , ()) \
+  _(OC_STRING , Comment , , OC_STRING_CONSTR ("", _, __), OC_DESTR (OC_STRING))
+  OC_DECLARE (OC_MMIO_WL_STRUCT, ())
+
+#define OC_MMIO_WL_ARRAY_FIELDS(_, __) \
+  OC_ARRAY (OC_MMIO_WL_STRUCT, _, __)
+  OC_DECLARE (OC_MMIO_WL_ARRAY, ())
+
 #define OC_QUIRKS_FIELDS(_, __) \
   _(BOOLEAN , AvoidRuntimeDefrag      ,   , TRUE  ,()) \
   _(BOOLEAN , DevirtualiseMmio        ,   , FALSE ,()) \
@@ -21,15 +31,31 @@
   _(BOOLEAN , EnableSafeModeSlide     ,   , TRUE  ,()) \
   _(BOOLEAN , EnableWriteUnprotector  ,   , TRUE  ,()) \
   _(BOOLEAN , ForceExitBootServices   ,   , TRUE  ,()) \
+  _(OC_MMIO_WL_ARRAY , MmioWhitelist  ,   , OC_CONSTR2 (OC_MMIO_WL_ARRAY, _, __) , OC_DESTR (OC_MMIO_WL_ARRAY)) \
   _(BOOLEAN , ProtectCsmRegion        ,   , FALSE ,()) \
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
   _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,()) \
-  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,())
+  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,()) \
+
   OC_DECLARE (OC_QUIRKS)
 
-OC_STRUCTORS (OC_QUIRKS, ())
+OC_STRUCTORS        (OC_MMIO_WL_STRUCT, ())
+OC_ARRAY_STRUCTORS  (OC_MMIO_WL_ARRAY)
+OC_STRUCTORS        (OC_QUIRKS, ())
+
+STATIC
+OC_SCHEMA
+mMmioWhitelistEntry[] = {
+  OC_SCHEMA_INTEGER_IN  ("Address", OC_MMIO_WL_STRUCT),
+  OC_SCHEMA_String_IN   ("Comment", OC_MMIO_WL_STRUCT),
+  OC_SCHEMA_BOOLEAN_IN  ("Enabled", OC_MMIO_WL_STRUCT),
+};
+
+STATIC
+OC_SCHEMA
+mMmioWhitelist = OC_SCHEMA_DICT (NULL, mMmioWhitelistEntry)
 
 STATIC
 OC_SCHEMA
@@ -42,6 +68,7 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("EnableSafeModeSlide"     , OC_QUIRKS, EnableSafeModeSlide),
   OC_SCHEMA_BOOLEAN_IN ("EnableWriteUnprotector"  , OC_QUIRKS, EnableWriteUnprotector),
   OC_SCHEMA_BOOLEAN_IN ("ForceExitBootServices"   , OC_QUIRKS, ForceExitBootServices),
+  OC_SCHEMA_ARRAY_IN   ("MmioWhitelist"           , OC_QUIRKS, MmioWhitelist, &mMmioWhitelist),
   OC_SCHEMA_BOOLEAN_IN ("ProtectCsmRegion"        , OC_QUIRKS, ProtectCsmRegion),
   OC_SCHEMA_BOOLEAN_IN ("ProvideConsoleGopEnable" , OC_QUIRKS, ProvideConsoleGopEnable),
   OC_SCHEMA_BOOLEAN_IN ("ProvideCustomSlide"      , OC_QUIRKS, ProvideCustomSlide),
@@ -174,7 +201,9 @@ QuirksEntryPoint (
     .ShrinkMemoryMap        = Config.ShrinkMemoryMap,
     .ForceExitBootServices  = Config.ForceExitBootServices,
     .DisableVariableWrite   = Config.DisableVariableWrite,
-    .EnableWriteUnprotector = Config.EnableWriteUnprotector
+    .EnableWriteUnprotector = Config.EnableWriteUnprotector,
+    .MmioWhitelist          = Config.MmioWhitelist,
+    .MmioWhitelistSize      = Config.MmioWhitelistSize
   };
   
   if (Config.ProvideConsoleGopEnable) {
