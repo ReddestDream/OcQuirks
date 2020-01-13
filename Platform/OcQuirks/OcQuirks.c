@@ -1,3 +1,4 @@
+#include <Library/MemoryAllocationLib.h>
 #include <Library/OcStorageLib.h>
 #include <Library/OcSerializeLib.h>
 #include <Library/OcTemplateLib.h>
@@ -16,11 +17,11 @@
   _(BOOLEAN   , Enabled , , FALSE , ()) \
   _(UINT64    , Address , , 0     , ()) \
   _(OC_STRING , Comment , , OC_STRING_CONSTR ("", _, __), OC_DESTR (OC_STRING))
-  OC_DECLARE (OC_MMIO_WL_STRUCT, ())
+  OC_DECLARE (OC_MMIO_WL_STRUCT)
 
 #define OC_MMIO_WL_ARRAY_FIELDS(_, __) \
   OC_ARRAY (OC_MMIO_WL_STRUCT, _, __)
-  OC_DECLARE (OC_MMIO_WL_ARRAY, ())
+  OC_DECLARE (OC_MMIO_WL_ARRAY)
 
 #define OC_QUIRKS_FIELDS(_, __) \
   _(BOOLEAN , AvoidRuntimeDefrag      ,   , TRUE  ,()) \
@@ -37,8 +38,7 @@
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
   _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,()) \
-  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,()) \
-
+  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,())
   OC_DECLARE (OC_QUIRKS)
 
 OC_STRUCTORS        (OC_MMIO_WL_STRUCT, ())
@@ -48,14 +48,14 @@ OC_STRUCTORS        (OC_QUIRKS, ())
 STATIC
 OC_SCHEMA
 mMmioWhitelistEntry[] = {
-  OC_SCHEMA_INTEGER_IN  ("Address", OC_MMIO_WL_STRUCT),
-  OC_SCHEMA_String_IN   ("Comment", OC_MMIO_WL_STRUCT),
-  OC_SCHEMA_BOOLEAN_IN  ("Enabled", OC_MMIO_WL_STRUCT),
+  OC_SCHEMA_INTEGER_IN  ("Address", OC_MMIO_WL_STRUCT, Address),
+  OC_SCHEMA_STRING_IN   ("Comment", OC_MMIO_WL_STRUCT, Comment),
+  OC_SCHEMA_BOOLEAN_IN  ("Enabled", OC_MMIO_WL_STRUCT, Enabled),
 };
 
 STATIC
 OC_SCHEMA
-mMmioWhitelist = OC_SCHEMA_DICT (NULL, mMmioWhitelistEntry)
+mMmioWhitelist = OC_SCHEMA_DICT (NULL, mMmioWhitelistEntry);
 
 STATIC
 OC_SCHEMA
@@ -187,7 +187,7 @@ QuirksEntryPoint (
   
   OC_QUIRKS_CONSTRUCT (&Config, sizeof (Config));
   QuirksProvideConfig(&Config, Handle);
-  
+    
   OC_ABC_SETTINGS AbcSettings = {
   
     .AvoidRuntimeDefrag	    = Config.AvoidRuntimeDefrag,
@@ -201,10 +201,28 @@ QuirksEntryPoint (
     .ShrinkMemoryMap        = Config.ShrinkMemoryMap,
     .ForceExitBootServices  = Config.ForceExitBootServices,
     .DisableVariableWrite   = Config.DisableVariableWrite,
-    .EnableWriteUnprotector = Config.EnableWriteUnprotector,
-    .MmioWhitelist          = Config.MmioWhitelist,
-    .MmioWhitelistSize      = Config.MmioWhitelistSize
+    .EnableWriteUnprotector = Config.EnableWriteUnprotector
   };
+  
+  if (Config.DevirtualiseMmio && Config.MmioWhitelist.Count > 0) {
+    AbcSettings.MmioWhitelist = AllocatePool (
+      Config.MmioWhitelist.Count * sizeof (AbcSettings.MmioWhitelist[0])
+      );
+    
+    if (AbcSettings.MmioWhitelist != NULL) {
+      UINT32 abcIndex = 0;
+      UINT32 configIndex = 0;
+      
+      for (configIndex = 0; configIndex < Config.MmioWhitelist.Count; configIndex++) {
+        if (Config.MmioWhitelist.Values[configIndex]->Enabled) {
+          AbcSettings.MmioWhitelist[abcIndex] = Config.MmioWhitelist.Values[configIndex]->Address;
+          abcIndex++;
+        }
+      }
+      
+      AbcSettings.MmioWhitelistSize = abcIndex;
+    } // Else couldn't allocate slots for mmio addresses
+  }
   
   if (Config.ProvideConsoleGopEnable) {
   	QuirksProvideConsoleGop ();
