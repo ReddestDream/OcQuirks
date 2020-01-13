@@ -130,7 +130,7 @@ QuirksProvideConfig (
     );
   
   if (EFI_ERROR (Status)) {
-    return FALSE;
+    goto failLoadFS;
   }
   
   FileSystem = LocateFileSystem (
@@ -139,7 +139,7 @@ QuirksProvideConfig (
     );
   
   if (FileSystem == NULL) {
-    return FALSE;
+    goto failLoadFS;
   }
   
   // Init OcStorage as it already handles
@@ -152,7 +152,7 @@ QuirksProvideConfig (
     );
   
   if (EFI_ERROR (Status)) {
-    return FALSE;
+    goto failInitStorage;
   }
   
   ConfigData = OcStorageReadFileUnicode (
@@ -163,17 +163,27 @@ QuirksProvideConfig (
   
   // If no config data or greater than max size, fail and use defaults
   if(!ConfigDataSize || ConfigDataSize > MAX_DATA_SIZE) {
-    return FALSE;
+    goto failGetConfig;
   }
   
   BOOLEAN Success = ParseSerialized (Config, &mConfigInfo, ConfigData, ConfigDataSize);
   
+  gBS->FreePool(&Status);
   gBS->FreePool(ConfigData);
   gBS->FreePool(&ConfigDataSize);
-  gBS->FreePool(&Status);
   gBS->FreePool(&Storage);
   
   return Success;
+
+failGetConfig:
+  gBS->FreePool(ConfigData);
+  gBS->FreePool(&ConfigDataSize);
+failInitStorage:
+  gBS->FreePool(&Storage);
+failLoadFS:
+  gBS->FreePool(&Status);
+  
+  return FALSE;
 }
 
 EFI_STATUS
@@ -219,6 +229,9 @@ QuirksEntryPoint (
           abcIndex++;
         }
       }
+      
+      gBS->FreePool(&abcIndex);
+      gBS->FreePool(&configIndex);
       
       AbcSettings.MmioWhitelistSize = abcIndex;
     } // Else couldn't allocate slots for mmio addresses
