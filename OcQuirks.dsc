@@ -71,7 +71,6 @@
   UefiRuntimeServicesTableLib|MdePkg/Library/UefiRuntimeServicesTableLib/UefiRuntimeServicesTableLib.inf
   OcConsoleLib|OcSupportPkg/Library/OcConsoleLib/OcConsoleLib.inf
 
-
 [Components]
   OcQuirks/Platform/OcQuirks/OcQuirks.inf
   OcSupportPkg/Platform/FwRuntimeServices/FwRuntimeServices.inf
