@@ -3,6 +3,7 @@
 #include <Library/OcTemplateLib.h>
 #include <Library/OcAppleBootCompatLib.h>
 #include <Library/UefiBootServicesTableLib.h>
+#include <Library/OcConsoleLib.h>
 
 #include <Protocol/LoadedImage.h>
 #include <Protocol/SimpleFileSystem.h>
@@ -55,31 +56,6 @@ OC_SCHEMA_INFO
 mConfigInfo = {
   .Dict = {mConfigNodes, ARRAY_SIZE (mConfigNodes)}
 };
-
-STATIC
-VOID
-QuirksProvideConsoleGop (
-  VOID
-  )
-{
-  EFI_STATUS  Status;
-  VOID        *Gop;
-
-  Gop = NULL;
-  Status = gBS->HandleProtocol (gST->ConsoleOutHandle, &gEfiGraphicsOutputProtocolGuid, &Gop);
-
-  if (EFI_ERROR (Status)) {
-    Status = gBS->LocateProtocol (&gEfiGraphicsOutputProtocolGuid, NULL, &Gop);
-    if (!EFI_ERROR (Status)) {
-      Status = gBS->InstallMultipleProtocolInterfaces (
-                      &gST->ConsoleOutHandle,
-                      &gEfiGraphicsOutputProtocolGuid,
-                      Gop,
-                      NULL
-                     );
-    }
-  }
-}
 
 STATIC
 BOOLEAN
@@ -178,7 +154,7 @@ QuirksEntryPoint (
   };
   
   if (Config.ProvideConsoleGopEnable) {
-  	QuirksProvideConsoleGop ();
+  	OcProvideConsoleGop ();
   }
   
   OC_QUIRKS_DESTRUCT (&Config, sizeof (Config));

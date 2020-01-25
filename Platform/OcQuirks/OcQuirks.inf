@@ -19,6 +19,7 @@
   OcMachoLib
   OcOSInfoLib
   OcStorageLib
+  OcConsoleLib
   OcSerializeLib
   OcTemplateLib
   UefiBootServicesTableLib
@@ -30,3 +31,4 @@
 
 [Sources]
   OcQuirks.c
+  
