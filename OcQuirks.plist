@@ -18,6 +18,8 @@
 	<true/>
 	<key>ProtectCsmRegion</key>
 	<false/>
+	<key>ProtectSecureBoot</key>
+	<false/>
 	<key>ShrinkMemoryMap</key>
 	<false/>
 	<key>ForceExitBootServices</key>
