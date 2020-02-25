@@ -157,7 +157,7 @@ QuirksEntryPoint (
   };
   
   if (Config.ProvideConsoleGopEnable) {
-  	OcProvideConsoleGop ();
+  	OcProvideConsoleGop (TRUE);
   }
   
   OC_QUIRKS_DESTRUCT (&Config, sizeof (Config));
