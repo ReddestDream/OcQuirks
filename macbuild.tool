@@ -141,7 +141,7 @@ fi
 updaterepo "https://github.com/acidanthera/audk" UDK master || exit 1
 cd UDK
 updaterepo "https://github.com/acidanthera/EfiPkg" EfiPkg master || exit 1
-updaterepo "https://github.com/acidanthera/OcSupportPkg" OcSupportPkg master || exit 1
+updaterepo "https://github.com/acidanthera/OpenCorePkg" OpenCorePkg master || exit 1
 
 if [ ! -d OcQuirks ]; then
   ln -s .. OcQuirks || exit 1
