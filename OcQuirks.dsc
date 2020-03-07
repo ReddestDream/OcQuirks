@@ -71,6 +71,8 @@
   UefiLib|MdePkg/Library/UefiLib/UefiLib.inf
   UefiRuntimeServicesTableLib|MdePkg/Library/UefiRuntimeServicesTableLib/UefiRuntimeServicesTableLib.inf
   OcConsoleLib|OpenCorePkg/Library/OcConsoleLib/OcConsoleLib.inf
+  MtrrLib|UefiCpuPkg/Library/MtrrLib/MtrrLib.inf
+  CpuLib|MdePkg/Library/BaseCpuLib/BaseCpuLib.inf
 
 [Components]
   OcQuirks/Platform/OcQuirks/OcQuirks.inf
