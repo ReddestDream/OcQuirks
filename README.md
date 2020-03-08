@@ -12,7 +12,7 @@ To install OcQuirks, download the latest release or build it using the instructi
 - Mount your EFI volume.
 - Back your EFI volume up to a bootable USB drive and verify that it works.
 - Remove AptioMemoryFix, and any OsxAptioFix variants from the Clover drivers folder on your EFI volume.
-- Add OcQuirks.efi and FwRuntimeServices.efi to the Clover drivers folder on your EFI volume.
+- Add OcQuirks.efi, FwRuntimeServices.efi, and OcQuirks.plist to the Clover drivers folder on your EFI volume.
 - Reboot.
 
 If your system has trouble booting, use your USB stick to boot back into macOS and revert by reversing the process.  Inspect the parameters below and build OcQuirks with parameters that better match your system.
