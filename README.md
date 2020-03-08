@@ -4,9 +4,7 @@
 OcQuirks is a drop in replacement EFI driver for Clover that replaces AptioMemoryFix and all OsxAptioFix variants.  It is built against the OpenCore source tree, and supports OpenCore's quirks model.
 
 ## Prerequisites
-The OcQuirks EFI driver has a dependency on FwRuntimeServices.efi, and they must be installed together in the CLOVER EFI drivers directory.  FwRuntimeServices.efi can be found in AppleSupportPkg.
-
-Download AppleSupportPkg from the project's [releases page](https://github.com/acidanthera/AppleSupportPkg).
+The OcQuirks EFI driver has a dependency on FwRuntimeServices.efi, and they must be installed together in the CLOVER EFI drivers directory.  FwRuntimeServices.efi can be found in the release zip and is built along with OcQuirks.
 
 ## Installation
 To install OcQuirks, download the latest release or build it using the instructions below and then install it into your EFI replacing any existing memory fix driver.
