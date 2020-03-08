@@ -35,7 +35,7 @@ The parameters listed below can be changed by dropping in OcQuirks.plist into yo
 |ProvideCustomSlide|True|Force macOS to use a pseudorandom value among available slide values.|
 |SetupVirtualMap|True|Workaround issues in some firmwares that access memory after SetVirtualAddress calls often resulting in boot crashes.|
 |ShrinkMemoryMap|False|Rarely needed on Haswell or newer, attempts to unify contiguous slots of similar types to prevent boot failures.|
-|QuirksProvideConsoleGopEnable|True|Install Graphics Output Protocol if missing from the console handle.|
+|ProvideConsoleGopEnable|True|Install Graphics Output Protocol if missing from the console handle.|
 |SignalAppleOS|False|This quirk is useful on Mac firmwares, which behave differently in different OS.|
 
 For a more indepth description of quirks, review the [OpenCore Configuration Manual](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf).
