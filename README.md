@@ -35,6 +35,7 @@ The parameters listed below can be changed by dropping in OcQuirks.plist into yo
 |ForceExitBootServices|True|Ensures that calls to ExitBootServices succeed even with an outdated MemoryMap key.|
 |ProtectCsmRegion|False|Prevents CSM memory regions from relocation or use.|
 |ProtectSecureBoot|False|Protect UEFI Secure Boot variables from being written.|
+|ProtectUefiServices|False|Protect UEFI services from being overridden by the firmware.|
 |ProvideCustomSlide|True|Force macOS to use a pseudorandom value among available slide values.|
 |SetupVirtualMap|True|Workaround issues in some firmwares that access memory after SetVirtualAddress calls often resulting in boot crashes.|
 |ShrinkMemoryMap|False|Rarely needed on Haswell or newer, attempts to unify contiguous slots of similar types to prevent boot failures.|
