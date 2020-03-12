@@ -20,6 +20,8 @@
 	<false/>
 	<key>ProtectSecureBoot</key>
 	<false/>
+	<key>ProtectUefiServices</key>
+	<false/>
 	<key>ShrinkMemoryMap</key>
 	<false/>
 	<key>ForceExitBootServices</key>

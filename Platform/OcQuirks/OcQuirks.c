@@ -24,6 +24,7 @@
   _(BOOLEAN , ForceExitBootServices   ,   , TRUE  ,()) \
   _(BOOLEAN , ProtectCsmRegion        ,   , FALSE ,()) \
   _(BOOLEAN , ProtectSecureBoot       ,   , FALSE ,()) \
+  _(BOOLEAN , ProtectUefiServices     ,   , FALSE ,()) \
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
@@ -46,6 +47,7 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("ForceExitBootServices"   , OC_QUIRKS, ForceExitBootServices),
   OC_SCHEMA_BOOLEAN_IN ("ProtectCsmRegion"        , OC_QUIRKS, ProtectCsmRegion),
   OC_SCHEMA_BOOLEAN_IN ("ProtectSecureBoot"       , OC_QUIRKS, ProtectSecureBoot),
+  OC_SCHEMA_BOOLEAN_IN ("ProtectUefiServices"     , OC_QUIRKS, ProtectUefiServices),
   OC_SCHEMA_BOOLEAN_IN ("ProvideConsoleGopEnable" , OC_QUIRKS, ProvideConsoleGopEnable),
   OC_SCHEMA_BOOLEAN_IN ("ProvideCustomSlide"      , OC_QUIRKS, ProvideCustomSlide),
   OC_SCHEMA_BOOLEAN_IN ("SetupVirtualMap"         , OC_QUIRKS, SetupVirtualMap),
@@ -150,6 +152,7 @@ QuirksEntryPoint (
     .EnableSafeModeSlide    = Config.EnableSafeModeSlide,
     .ProtectCsmRegion       = Config.ProtectCsmRegion,
     .ProtectSecureBoot      = Config.ProtectSecureBoot,
+    .ProtectUefiServices    = Config.ProtectUefiServices,
     .ShrinkMemoryMap        = Config.ShrinkMemoryMap,
     .ForceExitBootServices  = Config.ForceExitBootServices,
     .DisableVariableWrite   = Config.DisableVariableWrite,
