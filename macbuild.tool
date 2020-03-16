@@ -49,7 +49,7 @@ package() {
   cp OcQuirks.plist "$1"/tmp/Drivers || exit 1
   pushd "$1" || exit 1
   cp OcQuirks.efi tmp/Drivers/ || exit 1
-  cp FwRuntimeServices.efi tmp/Drivers/ || exit 1
+  cp OpenRuntime.efi tmp/Drivers/ || exit 1
   pushd tmp || exit 1
   zip -qry -FS ../"OcQuirks-R${ver}-${2}.zip" * || exit 1
   popd || exit 1
