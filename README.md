@@ -31,16 +31,18 @@ The parameters listed below can be changed by dropping in OcQuirks.plist into yo
 |DisableVariableWrite|False|A security option to protect macOS NVRAM write access.|
 |DiscardHibernateMap|False|A legacy parameter to work around buggy memory maps.  Preserves runtime memory size and location after wake from S4 sleep.|
 |EnableSafeModeSlide|True|Patch the bootloader to enable KASLR in safe mode.|
-|EnableWriteUnprotector|True|Permits write access to UEFI runtime services code.|
+|EnableWriteUnprotector|False|Permits write access to UEFI runtime services code. Use RebuildAppleMemoryMap if possible.|
 |ForceExitBootServices|True|Ensures that calls to ExitBootServices succeed even with an outdated MemoryMap key.|
-|ProtectCsmRegion|False|Prevents CSM memory regions from relocation or use.|
+|MmioWhitelist|Array|Designed to be filled with plist dict values, describing addresses critical for particular firmware functioning when DevirtualiseMmio quirk is in use.
+|ProtectMemoryRegions|False|Protect memory regions from incorrect access. Only needed by very old firmwares.|
 |ProtectSecureBoot|False|Protect UEFI Secure Boot variables from being written.|
 |ProtectUefiServices|False|Protect UEFI services from being overridden by the firmware.|
-|ProvideCustomSlide|True|Force macOS to use a pseudorandom value among available slide values.|
-|SetupVirtualMap|True|Workaround issues in some firmwares that access memory after SetVirtualAddress calls often resulting in boot crashes.|
-|ShrinkMemoryMap|False|Rarely needed on Haswell or newer, attempts to unify contiguous slots of similar types to prevent boot failures.|
 |ProvideConsoleGopEnable|True|Install Graphics Output Protocol if missing from the console handle.|
+|ProvideCustomSlide|True|Force macOS to use a pseudorandom value among available slide values.|
+|RebuildAppleMemoryMap|True|Generate Memory Map compatible with macOS.|
+|SetupVirtualMap|True|Workaround issues in some firmwares that access memory after SetVirtualAddress calls often resulting in boot crashes.|
 |SignalAppleOS|False|This quirk is useful on Mac firmwares, which behave differently in different OS.|
+|SyncRuntimePermissions|True|Update memory permissions for runtime environment.|
 
 For a more indepth description of quirks, review the [OpenCore Configuration Manual](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf).
 
