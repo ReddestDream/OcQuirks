@@ -1,3 +1,4 @@
+#include <Library/MemoryAllocationLib.h>
 #include <Library/OcStorageLib.h>
 #include <Library/OcSerializeLib.h>
 #include <Library/OcTemplateLib.h>
@@ -13,6 +14,16 @@
 
 #define MAX_DATA_SIZE 10000
 
+#define OC_MMIO_WL_STRUCT_FIELDS(_, __) \
+  _(BOOLEAN   , Enabled , , FALSE , ()) \
+  _(UINT64    , Address , , 0     , ()) \
+  _(OC_STRING , Comment , , OC_STRING_CONSTR ("", _, __), OC_DESTR (OC_STRING))
+  OC_DECLARE (OC_MMIO_WL_STRUCT)
+
+#define OC_MMIO_WL_ARRAY_FIELDS(_, __) \
+  OC_ARRAY (OC_MMIO_WL_STRUCT, _, __)
+  OC_DECLARE (OC_MMIO_WL_ARRAY)
+
 #define OC_QUIRKS_FIELDS(_, __) \
   _(BOOLEAN , AvoidRuntimeDefrag      ,   , TRUE  ,()) \
   _(BOOLEAN , DevirtualiseMmio        ,   , FALSE ,()) \
@@ -22,6 +33,7 @@
   _(BOOLEAN , EnableSafeModeSlide     ,   , TRUE  ,()) \
   _(BOOLEAN , EnableWriteUnprotector  ,   , TRUE  ,()) \
   _(BOOLEAN , ForceExitBootServices   ,   , TRUE  ,()) \
+  _(OC_MMIO_WL_ARRAY , MmioWhitelist  ,   , OC_CONSTR2 (OC_MMIO_WL_ARRAY, _, __) , OC_DESTR (OC_MMIO_WL_ARRAY)) \
   _(BOOLEAN , ProtectCsmRegion        ,   , FALSE ,()) \
   _(BOOLEAN , ProtectSecureBoot       ,   , FALSE ,()) \
   _(BOOLEAN , ProtectUefiServices     ,   , FALSE ,()) \
@@ -32,7 +44,21 @@
   _(BOOLEAN , SignalAppleOS           ,   , FALSE ,())
   OC_DECLARE (OC_QUIRKS)
 
-OC_STRUCTORS (OC_QUIRKS, ())
+OC_STRUCTORS        (OC_MMIO_WL_STRUCT, ())
+OC_ARRAY_STRUCTORS  (OC_MMIO_WL_ARRAY)
+OC_STRUCTORS        (OC_QUIRKS, ())
+
+STATIC
+OC_SCHEMA
+mMmioWhitelistEntry[] = {
+  OC_SCHEMA_INTEGER_IN  ("Address", OC_MMIO_WL_STRUCT, Address),
+  OC_SCHEMA_STRING_IN   ("Comment", OC_MMIO_WL_STRUCT, Comment),
+  OC_SCHEMA_BOOLEAN_IN  ("Enabled", OC_MMIO_WL_STRUCT, Enabled),
+};
+
+STATIC
+OC_SCHEMA
+mMmioWhitelist = OC_SCHEMA_DICT (NULL, mMmioWhitelistEntry);
 
 STATIC
 OC_SCHEMA
@@ -45,6 +71,7 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("EnableSafeModeSlide"     , OC_QUIRKS, EnableSafeModeSlide),
   OC_SCHEMA_BOOLEAN_IN ("EnableWriteUnprotector"  , OC_QUIRKS, EnableWriteUnprotector),
   OC_SCHEMA_BOOLEAN_IN ("ForceExitBootServices"   , OC_QUIRKS, ForceExitBootServices),
+  OC_SCHEMA_ARRAY_IN   ("MmioWhitelist"           , OC_QUIRKS, MmioWhitelist, &mMmioWhitelist),
   OC_SCHEMA_BOOLEAN_IN ("ProtectCsmRegion"        , OC_QUIRKS, ProtectCsmRegion),
   OC_SCHEMA_BOOLEAN_IN ("ProtectSecureBoot"       , OC_QUIRKS, ProtectSecureBoot),
   OC_SCHEMA_BOOLEAN_IN ("ProtectUefiServices"     , OC_QUIRKS, ProtectUefiServices),
@@ -83,7 +110,7 @@ QuirksProvideConfig (
     );
   
   if (EFI_ERROR (Status)) {
-    return FALSE;
+    goto failLoadFS;
   }
   
   FileSystem = LocateFileSystem (
@@ -92,7 +119,7 @@ QuirksProvideConfig (
     );
   
   if (FileSystem == NULL) {
-    return FALSE;
+    goto failLoadFS;
   }
   
   // Init OcStorage as it already handles
@@ -105,7 +132,7 @@ QuirksProvideConfig (
     );
   
   if (EFI_ERROR (Status)) {
-    return FALSE;
+    goto failInitStorage;
   }
   
   ConfigData = OcStorageReadFileUnicode (
@@ -116,17 +143,27 @@ QuirksProvideConfig (
   
   // If no config data or greater than max size, fail and use defaults
   if(!ConfigDataSize || ConfigDataSize > MAX_DATA_SIZE) {
-    return FALSE;
+    goto failGetConfig;
   }
   
   BOOLEAN Success = ParseSerialized (Config, &mConfigInfo, ConfigData, ConfigDataSize);
   
+  gBS->FreePool(&Status);
   gBS->FreePool(ConfigData);
   gBS->FreePool(&ConfigDataSize);
-  gBS->FreePool(&Status);
   gBS->FreePool(&Storage);
   
   return Success;
+
+failGetConfig:
+  gBS->FreePool(ConfigData);
+  gBS->FreePool(&ConfigDataSize);
+failInitStorage:
+  gBS->FreePool(&Storage);
+failLoadFS:
+  gBS->FreePool(&Status);
+  
+  return FALSE;
 }
 
 EFI_STATUS
@@ -140,7 +177,7 @@ QuirksEntryPoint (
   
   OC_QUIRKS_CONSTRUCT (&Config, sizeof (Config));
   QuirksProvideConfig(&Config, Handle);
-  
+    
   OC_ABC_SETTINGS AbcSettings = {
   
     .AvoidRuntimeDefrag	    = Config.AvoidRuntimeDefrag,
@@ -158,6 +195,29 @@ QuirksEntryPoint (
     .DisableVariableWrite   = Config.DisableVariableWrite,
     .EnableWriteUnprotector = Config.EnableWriteUnprotector
   };
+  
+  if (Config.DevirtualiseMmio && Config.MmioWhitelist.Count > 0) {
+    AbcSettings.MmioWhitelist = AllocatePool (
+      Config.MmioWhitelist.Count * sizeof (AbcSettings.MmioWhitelist[0])
+      );
+    
+    if (AbcSettings.MmioWhitelist != NULL) {
+      UINT32 abcIndex = 0;
+      UINT32 configIndex = 0;
+      
+      for (configIndex = 0; configIndex < Config.MmioWhitelist.Count; configIndex++) {
+        if (Config.MmioWhitelist.Values[configIndex]->Enabled) {
+          AbcSettings.MmioWhitelist[abcIndex] = Config.MmioWhitelist.Values[configIndex]->Address;
+          abcIndex++;
+        }
+      }
+      
+      gBS->FreePool(&abcIndex);
+      gBS->FreePool(&configIndex);
+      
+      AbcSettings.MmioWhitelistSize = abcIndex;
+    } // Else couldn't allocate slots for mmio addresses
+  }
   
   if (Config.ProvideConsoleGopEnable) {
   	OcProvideConsoleGop (TRUE);

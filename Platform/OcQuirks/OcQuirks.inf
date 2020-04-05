@@ -13,6 +13,7 @@
   OpenCorePkg/OpenCorePkg.dec
 
 [LibraryClasses]
+  MemoryAllocationLib
   DebugLib
   OcAppleBootCompatLib
   OcBootManagementLib
