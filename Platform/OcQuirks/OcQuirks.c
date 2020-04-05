@@ -2,7 +2,7 @@
 #include <Library/OcStorageLib.h>
 #include <Library/OcSerializeLib.h>
 #include <Library/OcTemplateLib.h>
-#include <Library/OcAppleBootCompatLib.h>
+#include <Library/OcAfterBootCompatLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/OcConsoleLib.h>
 

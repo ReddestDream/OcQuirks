@@ -15,7 +15,7 @@
 [LibraryClasses]
   MemoryAllocationLib
   DebugLib
-  OcAppleBootCompatLib
+  OcAfterBootCompatLib
   OcBootManagementLib
   OcMachoLib
   OcOSInfoLib
