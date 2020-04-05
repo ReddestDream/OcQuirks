@@ -4,35 +4,39 @@
 <dict>
 	<key>AvoidRuntimeDefrag</key>
 	<true/>
-	<key>SetupVirtualMap</key>
-	<true/>
-	<key>ProvideCustomSlide</key>
-	<true/>
 	<key>DevirtualiseMmio</key>
 	<false/>
 	<key>DisableSingleUser</key>
+	<false/>
+	<key>DisableVariableWrite</key>
 	<false/>
 	<key>DiscardHibernateMap</key>
 	<false/>
 	<key>EnableSafeModeSlide</key>
 	<true/>
-	<key>ProtectCsmRegion</key>
+	<key>EnableWriteUnprotector</key>
+	<false/>
+	<key>ForceExitBootServices</key>
+	<true/>
+	<key>MmioWhitelist</key>
+	<array/>
+	<key>ProtectMemoryRegions</key>
 	<false/>
 	<key>ProtectSecureBoot</key>
 	<false/>
 	<key>ProtectUefiServices</key>
 	<false/>
-	<key>ShrinkMemoryMap</key>
-	<false/>
-	<key>ForceExitBootServices</key>
-	<true/>
-	<key>DisableVariableWrite</key>
-	<false/>
-	<key>EnableWriteUnprotector</key>
-	<true/>
 	<key>ProvideConsoleGopEnable</key>
+	<true/>
+	<key>ProvideCustomSlide</key>
+	<true/>
+	<key>RebuildAppleMemoryMap</key>
+	<true/>
+	<key>SetupVirtualMap</key>
 	<true/>
 	<key>SignalAppleOS</key>
 	<false/>
+	<key>SyncRuntimePermissions</key>
+	<true/>
 </dict>
 </plist>

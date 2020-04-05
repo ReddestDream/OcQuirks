@@ -31,17 +31,19 @@
   _(BOOLEAN , DisableVariableWrite    ,   , FALSE ,()) \
   _(BOOLEAN , DiscardHibernateMap     ,   , FALSE ,()) \
   _(BOOLEAN , EnableSafeModeSlide     ,   , TRUE  ,()) \
-  _(BOOLEAN , EnableWriteUnprotector  ,   , TRUE  ,()) \
+  _(BOOLEAN , EnableWriteUnprotector  ,   , FALSE  ,()) \
   _(BOOLEAN , ForceExitBootServices   ,   , TRUE  ,()) \
   _(OC_MMIO_WL_ARRAY , MmioWhitelist  ,   , OC_CONSTR2 (OC_MMIO_WL_ARRAY, _, __) , OC_DESTR (OC_MMIO_WL_ARRAY)) \
-  _(BOOLEAN , ProtectCsmRegion        ,   , FALSE ,()) \
+  _(BOOLEAN , ProtectMemoryRegions    ,   , FALSE ,()) \
   _(BOOLEAN , ProtectSecureBoot       ,   , FALSE ,()) \
   _(BOOLEAN , ProtectUefiServices     ,   , FALSE ,()) \
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
+  _(BOOLEAN , RebuildAppleMemoryMap   ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
-  _(BOOLEAN , ShrinkMemoryMap         ,   , FALSE ,()) \
-  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,())
+  _(BOOLEAN , SignalAppleOS           ,   , FALSE ,()) \
+  _(BOOLEAN , SyncRuntimePermissions  ,   , TRUE  ,())
+
   OC_DECLARE (OC_QUIRKS)
 
 OC_STRUCTORS        (OC_MMIO_WL_STRUCT, ())
@@ -72,14 +74,15 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("EnableWriteUnprotector"  , OC_QUIRKS, EnableWriteUnprotector),
   OC_SCHEMA_BOOLEAN_IN ("ForceExitBootServices"   , OC_QUIRKS, ForceExitBootServices),
   OC_SCHEMA_ARRAY_IN   ("MmioWhitelist"           , OC_QUIRKS, MmioWhitelist, &mMmioWhitelist),
-  OC_SCHEMA_BOOLEAN_IN ("ProtectCsmRegion"        , OC_QUIRKS, ProtectCsmRegion),
+  OC_SCHEMA_BOOLEAN_IN ("ProtectMemoryRegions"    , OC_QUIRKS, ProtectMemoryRegions),
   OC_SCHEMA_BOOLEAN_IN ("ProtectSecureBoot"       , OC_QUIRKS, ProtectSecureBoot),
   OC_SCHEMA_BOOLEAN_IN ("ProtectUefiServices"     , OC_QUIRKS, ProtectUefiServices),
   OC_SCHEMA_BOOLEAN_IN ("ProvideConsoleGopEnable" , OC_QUIRKS, ProvideConsoleGopEnable),
   OC_SCHEMA_BOOLEAN_IN ("ProvideCustomSlide"      , OC_QUIRKS, ProvideCustomSlide),
+  OC_SCHEMA_BOOLEAN_IN ("RebuildAppleMemoryMap"   , OC_QUIRKS, RebuildAppleMemoryMap),
   OC_SCHEMA_BOOLEAN_IN ("SetupVirtualMap"         , OC_QUIRKS, SetupVirtualMap),
-  OC_SCHEMA_BOOLEAN_IN ("ShrinkMemoryMap"         , OC_QUIRKS, ShrinkMemoryMap),
-  OC_SCHEMA_BOOLEAN_IN ("SignalAppleOS"           , OC_QUIRKS, SignalAppleOS)
+  OC_SCHEMA_BOOLEAN_IN ("SignalAppleOS"           , OC_QUIRKS, SignalAppleOS),
+  OC_SCHEMA_BOOLEAN_IN ("SyncRuntimePermissions"  , OC_QUIRKS, SyncRuntimePermissions)
 };
 
 STATIC
@@ -181,19 +184,21 @@ QuirksEntryPoint (
   OC_ABC_SETTINGS AbcSettings = {
   
     .AvoidRuntimeDefrag	    = Config.AvoidRuntimeDefrag,
-    .SetupVirtualMap        = Config.SetupVirtualMap,
-    .ProvideCustomSlide     = Config.ProvideCustomSlide,
     .DevirtualiseMmio       = Config.DevirtualiseMmio,
     .DisableSingleUser      = Config.DisableSingleUser,
+    .DisableVariableWrite   = Config.DisableVariableWrite,
     .DiscardHibernateMap    = Config.DiscardHibernateMap,
     .EnableSafeModeSlide    = Config.EnableSafeModeSlide,
-    .ProtectCsmRegion       = Config.ProtectCsmRegion,
+    .EnableWriteUnprotector = Config.EnableWriteUnprotector,
+    .ForceExitBootServices  = Config.ForceExitBootServices,
+    .ProtectMemoryRegions   = Config.ProtectMemoryRegions,
     .ProtectSecureBoot      = Config.ProtectSecureBoot,
     .ProtectUefiServices    = Config.ProtectUefiServices,
-    .ShrinkMemoryMap        = Config.ShrinkMemoryMap,
-    .ForceExitBootServices  = Config.ForceExitBootServices,
-    .DisableVariableWrite   = Config.DisableVariableWrite,
-    .EnableWriteUnprotector = Config.EnableWriteUnprotector
+    .ProvideCustomSlide     = Config.ProvideCustomSlide,
+    .RebuildAppleMemoryMap  = Config.RebuildAppleMemoryMap,
+    .SetupVirtualMap        = Config.SetupVirtualMap,
+    .SignalAppleOS          = Config.SignalAppleOS,
+    .SyncRuntimePermissions = Config.SyncRuntimePermissions
   };
   
   if (Config.DevirtualiseMmio && Config.MmioWhitelist.Count > 0) {
