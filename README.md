@@ -17,7 +17,7 @@ To install OcQuirks, download the latest release or build it using the instructi
 
 If your system has trouble booting, use your USB stick to boot back into macOS and revert by reversing the process.  Inspect the parameters below and configure OcQuirks.plist with parameters that better match your system.
 
-Default settings are based on AptioMemoryFix and are designed with new Intel systems in mind. Your system may require custom settings, (e.g., Z390 may need DevirtualiseMmio+ProtectUefiServices, Older 100-200 series might need EnableWriteUnprotector instead of RebuildAppleMemoryMap). It is also assumed that all slides are valid (no slide=X).
+Default settings are based on AptioMemoryFix and are designed with new Intel systems in mind. Your system may require custom settings, (e.g., Z390 may need DevirtualiseMmio+ProtectUefiServices, Older 100-200 series might need EnableWriteUnprotector). It is also assumed that all slides are valid (no slide=X).
 
 ## Configuration
 The parameters listed below can be changed by dropping in OcQuirks.plist into your Clover drivers folder. This can be found in either the release zip or the root of the OcQuirks repository. If no plist is found, then the defaults below are used.
