@@ -7,7 +7,6 @@
   ENTRY_POINT                    = QuirksEntryPoint
 
 [Packages]
-  EfiPkg/EfiPkg.dec
   MdeModulePkg/MdeModulePkg.dec
   MdePkg/MdePkg.dec
   OpenCorePkg/OpenCorePkg.dec
