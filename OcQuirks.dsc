@@ -55,7 +55,7 @@
   OcRngLib|OpenCorePkg/Library/OcRngLib/OcRngLib.inf
   OcRtcLib|OpenCorePkg/Library/OcRtcLib/OcRtcLib.inf
   OcStringLib|OpenCorePkg/Library/OcStringLib/OcStringLib.inf
-  OcTimerLib|OpenCorePkg/Library/OcTimerLib/OcTimerLib.inf
+  TimerLib|OpenCorePkg/Library/OcTimerLib/OcTimerLib.inf
   OcTemplateLib|OpenCorePkg/Library/OcTemplateLib/OcTemplateLib.inf
   OcSerializeLib|OpenCorePkg/Library/OcSerializeLib/OcSerializeLib.inf
   OcStorageLib|OpenCorePkg/Library/OcStorageLib/OcStorageLib.inf
