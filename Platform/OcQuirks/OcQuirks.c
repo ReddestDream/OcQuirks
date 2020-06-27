@@ -38,7 +38,7 @@
   _(BOOLEAN , ProtectSecureBoot       ,   , FALSE ,()) \
   _(BOOLEAN , ProtectUefiServices     ,   , FALSE ,()) \
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
-  _(UINT8	, ProvideMaxSlide         ,   , 0     ,()) \
+  _(UINT8   , ProvideMaxSlide         ,   , 0     ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , RebuildAppleMemoryMap   ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
@@ -188,7 +188,7 @@ QuirksEntryPoint (
     .ProtectSecureBoot      = Config.ProtectSecureBoot,
     .ProtectUefiServices    = Config.ProtectUefiServices,
     .ProvideCustomSlide     = Config.ProvideCustomSlide,
-    .ProvideMaxSlide		= Config.ProvideMaxSlide,
+    .ProvideMaxSlide        = Config.ProvideMaxSlide,
     .RebuildAppleMemoryMap  = Config.RebuildAppleMemoryMap,
     .SetupVirtualMap        = Config.SetupVirtualMap,
     .SignalAppleOS          = Config.SignalAppleOS,
