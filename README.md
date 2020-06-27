@@ -38,6 +38,7 @@ The parameters listed below can be changed by dropping in OcQuirks.plist into yo
 |ProtectUefiServices|False|Protect UEFI services from being overridden by the firmware.|
 |ProvideConsoleGopEnable|True|Install Graphics Output Protocol if missing from the console handle.|
 |ProvideCustomSlide|True|Force macOS to use a pseudorandom value among available slide values.|
+|ProvideMaxSlide|0|Overrides the maximum slide instead of 256 when ProvideCustomSlide is enabled.|
 |RebuildAppleMemoryMap|True|Generate Memory Map compatible with macOS.|
 |SetupVirtualMap|True|Workaround issues in some firmwares that access memory after SetVirtualAddress calls often resulting in boot crashes.|
 |SignalAppleOS|False|This quirk is useful on Mac firmwares, which behave differently in different OS.|
