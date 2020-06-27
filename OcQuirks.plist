@@ -30,6 +30,8 @@
 	<true/>
 	<key>ProvideCustomSlide</key>
 	<true/>
+	<key>ProvideMaxSlide</key>
+	<integer>0</integer>
 	<key>RebuildAppleMemoryMap</key>
 	<true/>
 	<key>SetupVirtualMap</key>

@@ -38,6 +38,7 @@
   _(BOOLEAN , ProtectSecureBoot       ,   , FALSE ,()) \
   _(BOOLEAN , ProtectUefiServices     ,   , FALSE ,()) \
   _(BOOLEAN , ProvideConsoleGopEnable ,   , TRUE  ,()) \
+  _(UINT8	, ProvideMaxSlide         ,   , 0     ,()) \
   _(BOOLEAN , ProvideCustomSlide      ,   , TRUE  ,()) \
   _(BOOLEAN , RebuildAppleMemoryMap   ,   , TRUE  ,()) \
   _(BOOLEAN , SetupVirtualMap         ,   , TRUE  ,()) \
@@ -79,6 +80,7 @@ mConfigNodes[] = {
   OC_SCHEMA_BOOLEAN_IN ("ProtectUefiServices"     , OC_QUIRKS, ProtectUefiServices),
   OC_SCHEMA_BOOLEAN_IN ("ProvideConsoleGopEnable" , OC_QUIRKS, ProvideConsoleGopEnable),
   OC_SCHEMA_BOOLEAN_IN ("ProvideCustomSlide"      , OC_QUIRKS, ProvideCustomSlide),
+  OC_SCHEMA_INTEGER_IN ("ProvideMaxSlide"         , OC_QUIRKS, ProvideMaxSlide),
   OC_SCHEMA_BOOLEAN_IN ("RebuildAppleMemoryMap"   , OC_QUIRKS, RebuildAppleMemoryMap),
   OC_SCHEMA_BOOLEAN_IN ("SetupVirtualMap"         , OC_QUIRKS, SetupVirtualMap),
   OC_SCHEMA_BOOLEAN_IN ("SignalAppleOS"           , OC_QUIRKS, SignalAppleOS),
@@ -186,6 +188,7 @@ QuirksEntryPoint (
     .ProtectSecureBoot      = Config.ProtectSecureBoot,
     .ProtectUefiServices    = Config.ProtectUefiServices,
     .ProvideCustomSlide     = Config.ProvideCustomSlide,
+    .ProvideMaxSlide		= Config.ProvideMaxSlide,
     .RebuildAppleMemoryMap  = Config.RebuildAppleMemoryMap,
     .SetupVirtualMap        = Config.SetupVirtualMap,
     .SignalAppleOS          = Config.SignalAppleOS,
